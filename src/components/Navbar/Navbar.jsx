@@ -31,9 +31,7 @@ const Navbar = () => {
       {links}
     </ul>
   </div>
-  <div>
-     <h2>{user && user.name}</h2>
-  </div>
+  
   <div className="navbar-end gap-2">
     <div>
       {

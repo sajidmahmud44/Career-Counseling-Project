@@ -4,7 +4,7 @@ import { AuthContext } from "../components/provider/AuthProvider";
 
 
 const Register = () => {
-    const {createNewUser,user,setUser,updateUserProfile} = useContext(AuthContext);
+    const {createNewUser,setUser,updateUserProfile} = useContext(AuthContext);
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const navigate = useNavigate(); 
