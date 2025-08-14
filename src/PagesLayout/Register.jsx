@@ -2,11 +2,11 @@ import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../components/provider/AuthProvider";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
     const {createNewUser,setUser,updateUserProfile} = useContext(AuthContext);
-    const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
     const [showPassword, setshowPassword] = useState(false);
     const navigate = useNavigate(); 
@@ -17,15 +17,16 @@ const Register = () => {
         const email = form.get("email");
         const photo = form.get("photo");
         const password = form.get("password");
-        setEmailError("");
+        
   setPasswordError("");
-  if (!email.includes("@")) {
-    setEmailError("Email must contain '@'");
+  if (!email || !email.includes("@")) {
+    toast.error("Please include @")
     return;
   }
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z]).{6,}$/;
   if (!passwordRegex.test(password)) {
     setPasswordError("Password must be at least 6 characters and include both uppercase and lowercase letters.");
+    toast.error("Make Sure your password has at least 6 characters and include both uppercase and lowercase letters.")
     return;
   }
         createNewUser(email,password).then((result) =>{
@@ -33,9 +34,11 @@ const Register = () => {
             setUser(user)
             updateUserProfile({displayName
 :name , photoURL : photo}).then(()=>{
-  navigate('/')
+  toast.success("Account created successfully!");
+  setTimeout(() => navigate('/'), 1000);
 }).catch((err)=>{
   console.log(err);
+  toast.error("Failed to update profile.")
 })
             
         })
@@ -43,6 +46,7 @@ const Register = () => {
     const errorCode = error.code;
     const errorMessage = error.message;
     console.log(errorCode,errorMessage)
+    toast.error("Registration failed: " + error.message)
   });
     }
     return (
@@ -80,7 +84,6 @@ const Register = () => {
             className="input input-bordered w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700"
             placeholder="you@example.com"
           />
-          {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
         </div>
 
         <div className="relative">
@@ -121,6 +124,17 @@ const Register = () => {
       </p>
     </div>
   </div>
+  {/* Toast Container */}
+  <ToastContainer
+  position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover></ToastContainer>
 </div>
 
     );
