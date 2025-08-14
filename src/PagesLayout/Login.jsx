@@ -2,9 +2,10 @@
 import { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../components/provider/AuthProvider';
+import { FcGoogle } from 'react-icons/fc';
 
 const Login = () => {
-  const {userLogin,setUser}= useContext(AuthContext)
+  const {userLogin,setUser,googleLogin}= useContext(AuthContext)
   const location = useLocation();
   const navigate = useNavigate();
   const [error,setError]= useState({});
@@ -23,7 +24,19 @@ const Login = () => {
     .catch((err) => {
     setError({...error, login: err.code})
   });
-  }
+  };
+  const handleGoogleLogin = (e) => {
+    e.preventDefault();
+    googleLogin()
+      .then((result) => {
+        setUser(result.user);
+        navigate(location?.state ? location.state : "/");
+      })
+      .catch((err) => {
+        setError({ ...error, login: err.code });
+      });
+  };
+
     return (
         <div className="min-h-screen flex justify-center items-center bg-white">
   <div className="card w-full max-w-lg shadow-xl rounded-xl border border-gray-200 bg-white p-10">
@@ -68,7 +81,20 @@ const Login = () => {
           Login
         </button>
       </form>
-
+{/* Divider */}
+          <div className="flex items-center my-6">
+            <div className="flex-grow h-px bg-gray-300"></div>
+            <span className="px-3 text-gray-500">OR</span>
+            <div className="flex-grow h-px bg-gray-300"></div>
+          </div>
+          {/* Google Login Button */}
+          <button
+            onClick={handleGoogleLogin}
+            className="flex items-center justify-center gap-3 border border-gray-300 rounded-lg py-2 px-4 w-full hover:bg-gray-100 transition"
+          >
+            <FcGoogle className="text-2xl" />
+            <span className="font-medium text-gray-700">Continue with Google</span>
+          </button>
       <p className="text-center text-green-800 mt-6">
         Don’t have an account?{" "}
         <Link to="/auth/register" className="text-green-700 font-semibold hover:underline">
