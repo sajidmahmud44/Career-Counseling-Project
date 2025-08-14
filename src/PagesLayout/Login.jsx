@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../components/provider/AuthProvider';
 import { FcGoogle } from 'react-icons/fc';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { toast, ToastContainer } from 'react-toastify';
 
 const Login = () => {
   const {userLogin,setUser,googleLogin}= useContext(AuthContext)
@@ -21,10 +22,14 @@ const Login = () => {
     userLogin(email,password).then((result)=>{
         const user = result.user;
         setUser(user);
-        navigate(location?.state ? location.state : "/")
+        toast.success("Login Successful....Welcome")
+        setTimeout(() => {
+          navigate(location?.state ? location.state : "/");
+        }, 1000);
     })
     .catch((err) => {
     setError({...error, login: err.code})
+    toast.error("Login failed: " + err.message);
   });
   };
   const handleGoogleLogin = (e) => {
@@ -32,10 +37,14 @@ const Login = () => {
     googleLogin()
       .then((result) => {
         setUser(result.user);
-        navigate(location?.state ? location.state : "/");
+        toast.success("Google login successful!");
+        setTimeout(() => {
+          navigate(location?.state ? location.state : "/");
+        }, 1000);
       })
       .catch((err) => {
         setError({ ...error, login: err.code });
+        toast.error("Google login failed: " + err.message);
       });
   };
 
@@ -116,6 +125,17 @@ const Login = () => {
       </p>
     </div>
   </div>
+  {/* Toast Container */}
+  <ToastContainer position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+  ></ToastContainer>
 </div>
 
 
