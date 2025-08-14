@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { AuthContext } from '../provider/AuthProvider';
-import { BsListNested } from 'react-icons/bs';
-import usericon from "../../assets/user.png"
 
+import usericon from "../../assets/user.png"
+import logo from "/logo.png"
 const Navbar = () => {
     const links = <>
     <li><NavLink to='/'>Home</NavLink></li>
@@ -24,7 +24,10 @@ const Navbar = () => {
         {links}
       </ul>
     </div>
-    <a className="btn btn-ghost text-2xl text-green-800">PathMentor</a>
+    <div className="flex items-center justify-center">
+    <img src={logo} alt="Logo" style={{ height: '40px' }} />
+    <span className="text-2xl font-bold text-green-800">PathMentor</span>
+  </div>
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1 text-green-800">
@@ -35,7 +38,7 @@ const Navbar = () => {
   <div className="navbar-end gap-2">
     <div>
       {
-        user && user?.email? (<div>
+        user && user?.photoURL? (<div>
           <img className='w-10 rounded-full' src={user?.photoURL} alt="" title={user?.displayName} />
         </div>) : (<img src={usericon} alt="" />)
       }
