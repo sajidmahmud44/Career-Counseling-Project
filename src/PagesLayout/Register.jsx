@@ -37,7 +37,7 @@ const Register = () => {
   toast.success("Account created successfully!");
   setTimeout(() => navigate('/'), 1000);
 }).catch((err)=>{
-  console.log(err);
+  // console.log(err);
   toast.error("Failed to update profile.")
 })
             
@@ -45,7 +45,7 @@ const Register = () => {
         .catch((error) => {
     const errorCode = error.code;
     const errorMessage = error.message;
-    console.log(errorCode,errorMessage)
+    // console.log(errorCode,errorMessage)
     toast.error("Registration failed: " + error.message)
   });
     }

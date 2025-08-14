@@ -11,13 +11,13 @@ const [success, setSuccess] = useState("");
         const form = new FormData(e.target);
         const name = form.get("name");
         const photo = form.get("photo");
-        console.log(name,photo);
+        // console.log(name,photo);
 
         updateUserProfile({displayName
 :name , photoURL : photo}).then(()=>{
   toast.success("Profile updated successfully!");
 }).catch((err)=>{
-  console.log(err);
+  // console.log(err);
   toast.error("Failed to update profile.");
 })}
     return (
