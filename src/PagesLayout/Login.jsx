@@ -3,12 +3,14 @@ import { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../components/provider/AuthProvider';
 import { FcGoogle } from 'react-icons/fc';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const Login = () => {
   const {userLogin,setUser,googleLogin}= useContext(AuthContext)
   const location = useLocation();
   const navigate = useNavigate();
   const [error,setError]= useState({});
+  const [showPassword, setshowPassword] = useState(false);
   console.log(location);
   const handleSubmit = (e)=>{
     e.preventDefault();
@@ -56,14 +58,25 @@ const Login = () => {
           />
         </div>
 
-        <div>
+        <div className="relative">
           <label className="label text-green-900 font-medium">Password</label>
           <input
-          name='password'
-            type="password"
-            className="input input-bordered w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700"
+            name="password"
+            type={showPassword ? "text" : "password"}
+            className="w-full rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-700 pr-10 py-2 px-3"
             placeholder="••••••••"
           />
+          
+        
+          <button
+            type="button"
+            onClick={() => setshowPassword(!showPassword)}
+            className="absolute right-3 top-[70%] translate-y-[-50%] text-gray-700 hover:text-gray-800 z-10"
+          >
+            {
+              showPassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
+            }
+          </button>
         </div>
         {
           error.login && (<label className="label text-red-500 font-medium">
@@ -97,7 +110,7 @@ const Login = () => {
           </button>
       <p className="text-center text-green-800 mt-6">
         Don’t have an account?{" "}
-        <Link to="/auth/register" className="text-green-700 font-semibold hover:underline">
+        <Link to="/auth/register" className="text-red-700 font-semibold hover:underline">
           Register
         </Link>
       </p>
