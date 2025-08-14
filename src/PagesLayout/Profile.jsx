@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../components/provider/AuthProvider';
 import usericon from "../assets/user.png"
+import { toast, ToastContainer } from 'react-toastify';
 
 const Profile = () => {
     const {user,updateUserProfile} = useContext(AuthContext);
@@ -14,10 +15,10 @@ const [success, setSuccess] = useState("");
 
         updateUserProfile({displayName
 :name , photoURL : photo}).then(()=>{
-  setSuccess("Profile updated successfully!");
+  toast.success("Profile updated successfully!");
 }).catch((err)=>{
   console.log(err);
-  setSuccess("Failed to update profile.");
+  toast.error("Failed to update profile.");
 })}
     return (
         <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-green-50 via-white to-green-100 p-6">
@@ -87,6 +88,17 @@ const [success, setSuccess] = useState("");
           )}
         </div>
       </div>
+      <ToastContainer 
+      position="top-center"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      ></ToastContainer>
     </div>
     );
 };
