@@ -1,12 +1,14 @@
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../components/provider/AuthProvider";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 
 const Register = () => {
     const {createNewUser,setUser,updateUserProfile} = useContext(AuthContext);
     const [emailError, setEmailError] = useState("");
     const [passwordError, setPasswordError] = useState("");
+    const [showPassword, setshowPassword] = useState(false);
     const navigate = useNavigate(); 
     const handleSubmit = (e) =>{
         e.preventDefault();
@@ -81,16 +83,30 @@ const Register = () => {
           {emailError && <p className="text-red-500 text-sm mt-1">{emailError}</p>}
         </div>
 
-        <div>
-          <label className="label text-green-900 font-medium">Password</label>
-          <input
-          name="password"
-            type="password"
-            className="input input-bordered w-full rounded-lg focus:outline-none focus:ring-2 focus:ring-green-700"
-            placeholder="••••••••"
-          />
-          {passwordError && <p className="text-red-500 text-sm mt-1">{passwordError}</p>}
-        </div>
+        <div className="relative">
+  <label className="label text-green-900 font-medium">Password</label>
+  <input
+    name="password"
+    type={showPassword ? "text" : "password"}
+    className="w-full rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-700 pr-10 py-2 px-3"
+    placeholder="••••••••"
+  />
+  
+
+  <button
+    type="button"
+    onClick={() => setshowPassword(!showPassword)}
+    className="absolute right-3 top-[70%] translate-y-[-50%] text-gray-700 hover:text-gray-800 z-10"
+  >
+    {
+      showPassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>
+    }
+  </button>
+</div>
+{passwordError && (
+    <p className="text-red-500 text-sm mt-1">{passwordError}</p>
+  )}
+
 
         <button className="btn bg-green-700 hover:bg-green-800 text-white font-semibold w-full rounded-lg">
           Register
