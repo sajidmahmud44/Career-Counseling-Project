@@ -1,2 +1,33 @@
 @import "tailwindcss";
 @plugin "daisyui";
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1s ease-in-out;
+}
+
+.animate-slideUp {
+  animation: slideUp 1s ease-in-out;
+}
+
+/* Custom green pagination bullets for Swiper */
+.swiper-pagination-bullet {
+  background-color: #22c55e; /* Tailwind green-500 */
+  opacity: 0.7;
+  width: 12px;
+  height: 12px;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+  transform: scale(1.3);
+  transition: all 0.3s ease;
+}
